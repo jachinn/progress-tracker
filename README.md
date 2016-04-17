@@ -1,5 +1,6 @@
 # progress-tracker
 A way to track progress for collectathons.
+Try it out at: http://jachinn.github.io/progress-tracker
 
 Easily add, update, and remove items as you finish collecting them.
 

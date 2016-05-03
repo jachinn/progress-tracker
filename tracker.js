@@ -30,6 +30,7 @@ function submit() {
 				updateRow(newRow, row)
 				deleteButton(newRow);
 				table.replaceChild(newRow, row);
+				return;
 			}
 		});
 	}

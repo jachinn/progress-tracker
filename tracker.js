@@ -1,8 +1,34 @@
-var table = document.getElementById('tracker');
+var table = document.querySelector('#tracker tbody');
 var headings = document.getElementById('headings');
 var button = document.querySelectorAll('button');
 // var form = document.querySelector('form');
-var inputs = document.querySelectorAll('input');
+var inputs = document.querySelectorAll('.inputs input');
+var upload = document.querySelector('.upload input');
+var exportData = []; 
+
+upload.addEventListener('change', function() {
+	Array.prototype.forEach.call(upload.files, function(file) {
+		readFile(file).then(function(data) {
+			table.textContent = '';
+			var json = JSON.parse(data);
+			for (var i = 0; i < json.length; i++) {
+				var row = document.createElement('tr');
+				row.appendChild(elt('td', json[i].todo));
+				row.appendChild(elt('td', json[i].need));
+				row.appendChild(elt('td', json[i].have));
+				row.appendChild(elt('td', json[i].where));
+				
+				deleteButton(row);
+				table.appendChild(row);
+			}
+			upload.value = '';
+		}, function(error) {
+			console.log("Couldn't import data.");
+		});
+
+	});
+});
+
 var added = [];
 button[0].addEventListener('click', submit);
 for (var i = 0; i < inputs.length; i++) {
@@ -12,6 +38,48 @@ for (var i = 0; i < inputs.length; i++) {
 		}
 	});
 }
+
+function readFile(file) {
+	return new Promise(function(succeed, fail) {
+		var reader = new FileReader();
+		reader.addEventListener('load', function() {
+			succeed(reader.result);
+		});
+		reader.addEventListener('error', function() {
+			fail(reader.error);
+		});
+		reader.readAsText(file);
+	});
+
+}
+
+function elt(name, text) {
+	var el = document.createElement(name);
+	el.textContent = text;
+	return el;
+}
+
+
+button[1].addEventListener('click', function() {
+	var rows = document.querySelectorAll('tr:not(#headings)');
+	console.log(rows);
+	Array.prototype.forEach.call(rows, function(row) {
+		var todo = row.children[0].textContent;
+		var need = row.children[1].textContent;
+		var have = row.children[2].textContent;
+		var where = row.children[3].textContent;
+		exportData.push({
+			'todo': todo,
+			'need': need,
+			'have': have,
+			'where': where
+		});
+	});
+	console.log(exportData);
+	var url = 'data:text/json;charset=utf8,' + encodeURIComponent(JSON.stringify(exportData));
+	window.open(url, '_blank');
+	window.focus();
+});
 
 function submit() {
 	var item = inputs[0].value;

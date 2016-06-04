@@ -57,6 +57,7 @@ upload.addEventListener('change', function() {
 				row.appendChild(elt('td', json[i].have, 'click', editInline));
 				row.appendChild(elt('td', json[i].where, 'click', editInline));
 				added.push(json[i].todo);
+				completed(row);
 				deleteButton(row);
 				table.appendChild(row);
 			}
@@ -95,6 +96,7 @@ function submit() {
 	if (added.length == 0 || added.indexOf(item) == -1) {
 		added.push(item);
 		createRow(row);
+		completed(row);
 		deleteButton(row);
 		table.appendChild(row);
 
@@ -134,6 +136,7 @@ function change(edit, cell) {
 	}
 	
 	cell.textContent = replace;
+	completed(cell.parentNode);
 }
 
 function editInline(e) {
@@ -160,8 +163,16 @@ function editInline(e) {
 	e.target.textContent = '';
 	edit.value = text;
 	e.target.appendChild(edit);
+	// console.log(cell.parentNode);
+	// completed(cell.parentNode);
 	edit.focus();
 	e.stopPropagation();
+}
+
+function completed(row) {
+	if (parseInt(row.children[1].textContent) <= parseInt(row.children[2].textContent)) {
+		row.style.color = '#ccc';
+	}
 }
 
 function updateRow(row, old) {
@@ -183,6 +194,7 @@ function updateRow(row, old) {
 	});
 		inputs[i].value = '';
 	}
+	completed(row);
 	inputs[0].focus()
 }
 

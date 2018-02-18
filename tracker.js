@@ -84,9 +84,10 @@ button[1].addEventListener('click', function() {
 			'where': where
 		});
 	});
-	var url = 'data:text/json;charset=utf8,' + encodeURIComponent(JSON.stringify(exportData));
-	window.open(url, '_blank');
-	window.focus();
+	// var url = 'data:text/json;charset=utf8,' + encodeURIComponent(JSON.stringify(exportData));
+	// window.open(url, '_blank');
+	// window.focus();
+	document.querySelector('#export').textContent = JSON.stringify(exportData);
 	exportData = [];
 });
 

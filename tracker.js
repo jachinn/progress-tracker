@@ -173,6 +173,8 @@ function editInline(e) {
 function completed(row) {
 	if (parseInt(row.children[1].textContent) <= parseInt(row.children[2].textContent)) {
 		row.style.color = '#ccc';
+	} else {
+		row.style.color = '#000';
 	}
 }
 

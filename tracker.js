@@ -87,7 +87,7 @@ button[1].addEventListener('click', function() {
 	var url = 'data:text/json;charset=utf8,' + encodeURI(JSON.stringify(exportData));
 	// var link = document.querySelector('#download');
 	event.target.setAttribute('href', url);
-	event.target.setAttribute('download', 'test.json');
+	event.target.setAttribute('download', 'export.json');
 	// window.open(url, '_blank');
 	// window.focus();
 	// document.querySelector('#export').textContent = JSON.stringify(exportData);

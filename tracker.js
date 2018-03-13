@@ -158,7 +158,11 @@ function editInline(e) {
 	// 	added.push(replace);
 	// 	console.log('after: ' + added);
 	// })
-	edit.type = 'text';
+	if (cell.cellIndex == 1 || cell.cellIndex == 2) {
+		edit.type = 'number';
+	} else {
+		edit.type = 'text';
+	}
 	edit.className = 'edit';
 	var text = e.target.textContent;
 	e.target.textContent = '';

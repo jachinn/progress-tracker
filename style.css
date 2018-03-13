@@ -30,3 +30,8 @@ tbody tr:hover{
 	display: block;
 	margin-top: 20px;
 }
+
+#download {
+	color: inherit;
+	text-decoration: inherit;
+}
